@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Acceso Técnico</title>
+    <link rel ="stylesheet" href="../public/styles.css">
+</head>
+<body>
+    <header>
+        <nav><a href="inicio.html">Volver a Inicio</a></nav>
+    </header>
+
+    <main>
+        <section>
+            <h2>Ingreso al Sistema</h2>
+            <!-- Formulario POST para sesiones de PHP -->
+            <form action="admin.html" method="POST">
+                <div>
+                    <label for="usuario">Usuario:</label>
+                    <input type="text" name="usuario" id="usuario" required>
+                </div>
+                <div>
+                    <label for="password">Contraseña:</label>
+                    <input type="password" name="password" id="password" required>
+                </div>
+                <button type="submit">Entrar</button>
+            </form>
+        </section>
+    </main>
+</body>
+</html>

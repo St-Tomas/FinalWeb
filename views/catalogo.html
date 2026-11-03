@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Catálogo - RescaTix</title>
+    <link rel ="stylesheet" href="../public/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Nuestro Stock</h1>
+        <nav>
+            <a href="inicio.html">Volver al Inicio</a>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h2>Filtrar Equipos</h2>
+            <form action="catalogo.html" method="GET">
+                <label for="marca">Marca:</label>
+                <select name="marca" id="marca">
+                    <option value="todas">Todas</option>
+                    <option value="samsung">Samsung</option>
+                    <option value="motorola">Motorola</option>
+                    <option value="xiaomi">Xiaomi</option>
+                    <option value="apple">Apple</option>
+                </select>
+                <label for="busqueda">Modelo:</label>
+                <input type="search" name="busqueda" id="busqueda" placeholder="Ej: A15, Moto G...">
+                <button type="submit">Buscar</button>
+            </form>
+        </section>
+
+        <section>
+            <article>
+                <h3>Samsung Galaxy A15 4G</h3>
+                <p>Precio: $250.000</p>
+                <a href="detalle.html">Ver más</a>
+            </article>
+            <article>
+                <h3>Motorola Moto G52</h3>
+                <p>Precio: $180.000</p>
+                <a href="detalle.html">Ver más</a>
+            </article>
+            <article>
+                <h3>iPhone SE 2020</h3>
+                <p>Precio: $200.000</p>
+                <a href="detalle.html">Ver más</a>
+            </article>
+            <article>
+                <h3>Samsung Galaxy S8</h3>
+                <p>Precio: $90.000</p>
+                <a href="detalle.html">Ver más</a>
+            </article>
+            <article>
+                <h3>Motorola Edge 30</h3>
+                <p>Precio: $320.000</p>
+                <a href="detalle.html">Ver más</a>
+            </article>
+            <article>
+                <h3>iPhone 11</h3>
+                <p>Precio: $380.000</p>
+                <a href="detalle.html">Ver más</a>
+            </article>
+        </section>
+    </main>
+</body>
+</html>
