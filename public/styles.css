@@ -1,35 +1,162 @@
 body{
     background-color: antiquewhite;
+    color: #333333;
+    font-family: 'Courier New', Courier, monospace;
 }
-header {
+.hero-macintosh {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 50vh;
+    padding: 20px;
+}
+.titulo-gigante {
+    font-size: 4em;
+    margin-bottom: 10px;
+}
+.eslogan {
+    font-size: 1.2em;
+    color: #333333;
+}
+.navega-bar{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
-    background-color: #A2C8B5;
-    color: #303436;
+    padding: 15px 30px;
+    background-color: #7fceb8;
+    border-bottom: 2px solid #333333;
 }
-
-nav ul {
+.nav-izq, .nav-der {
+    flex: 1;
+}
+.nav-der{
+    text-align: right;
+}
+.nav-centro ul {
     list-style: none;
-    display: flex;
+    display: inline-flex;
+    gap: 40px;
+    padding: 0;
+    margin: 0;
 }
-
-nav ul li {
-    padding: 0 15px;
-}
-
-nav ul li a {
-    color: #303436;
+.nav-centro ul li a {
+    color: #333333;
     text-decoration: none;
-    font-size: 16px;
+    font-size: 1.1em;
+    font-weight: bold;
+    text-transform: uppercase;
 }
-
-nav ul li a:hover {
+.nav-centro ul li a:hover {
     text-decoration: underline;
 }
+.btn-login {
+    background-color: #333333;
+    color: #F4F4F0;
+    padding: 8px 16px;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 4px;
+}
+.btn-login:hover {
+    background-color: #555555;
+}
+.logo-rt{
+    font-size: 1.5em;
+    font-family: 'Arial Black', sans-serif;
+    letter-spacing: -2px;
+    color: #333333;
+    text-decoration: none;
+}
+.bg-retro{
+    background-color: antiquewhite;
+    color: #333333;
+}
+.panel-filtros {
+    background-color: #f2e3d0;
+    border: 2px solid #333333;
+    border-radius: 4px;
+}
 
-/* Position the "Ingresar" link on the right */
-nav ul li:last-child {
-    margin-left: auto;
+.form-control-retro {
+    background-color: #faf6f0;
+    border: 1px solid #333333;
+    border-radius: 2px;
+}
+
+.form-control-retro:focus {
+    background-color: #ffffff;
+    border-color: #000000;
+    box-shadow: none;
+}
+
+.card-retro {
+    background-color: #faf6f0;
+    border: 2px solid #333333;
+    border-radius: 4px;
+    transition: transform 0.15s ease-in-out;
+}
+
+.card-retro:hover {
+    transform: translateY(-3px);
+}
+
+.card-img-container {
+    height: 220px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    background-color: #faf6f0;
+    border-bottom: 1px solid #333333;
+}
+
+.card-img-container img {
+    max-height: 100%;
+    width: auto;
+    object-fit: contain;
+}
+
+.precio {
+    font-size: 1.25rem;
+    color: #1a1a1a;
+}
+
+.btn-retro {
+    background-color: #333333;
+    color: #F4F4F0;
+    border: 2px solid #333333;
+    font-weight: bold;
+}
+
+.btn-retro:hover {
+    background-color: #555555;
+    color: #FFFFFF;
+    border-color: #555555;
+}
+
+.btn-outline-retro {
+    background-color: transparent;
+    color: #333333;
+    border: 2px solid #333333;
+    font-weight: bold;
+}
+
+.btn-outline-retro:hover {
+    background-color: #333333;
+    color: #F4F4F0;
+}
+
+.pagination-retro .page-link {
+    background-color: #f2e3d0;
+    color: #333333;
+    border: 1px solid #333333;
+    font-weight: bold;
+}
+
+.pagination-retro .page-item.active .page-link {
+    background-color: #333333;
+    border-color: #333333;
+    color: antiquewhite;
 }
