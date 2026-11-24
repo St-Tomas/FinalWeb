@@ -2,62 +2,235 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Panel de Administración</title>
-    <link rel ="stylesheet" href="../public/styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración - RescaTix</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../public/styles.css">
 </head>
-<body>
-    <header class="navega-bar">
-        <div class="nav-izq">
-            <a href="inicio.html" class="logo-rt"><strong>RT</strong></a>
-        </div>
-        <nav class="nav-centro">
-            <ul>
-                <li><a href="catalogo.html">Catalogo</a></li>
-                <li><a href="inicio.html">Inicio</a></li>
-                <li><a href="cotizar.html">Cotizar</a></li>
-            </ul>
+<body class="bg-mac modo-admin">
+
+    <header>
+        <nav class="navbar navbar-expand-lg navega-bar">
+            <div class="container">
+                <a href="inicio.html" class="navbar-brand logo-rt d-flex align-items-center gap-2">
+                    <span class="logo-pill">RT</span>
+                    <span class="logo-text">RescaTix</span>
+                </a>
+                <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navPrincipal" aria-controls="navPrincipal" aria-expanded="false" aria-label="Abrir menú">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navPrincipal">
+                    <ul class="navbar-nav mx-auto gap-lg-3 my-2 my-lg-0">
+                        <li class="nav-item"><a class="nav-link nav-mac-link" href="inicio.html">Inicio</a></li>
+                        <li class="nav-item"><a class="nav-link nav-mac-link" href="catalogo.html">Catálogo</a></li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-mac-link active d-inline-flex align-items-center gap-2" href="admin.html">
+                                <span>Cotizaciones</span>
+                                <span class="badge badge-rose rounded-pill" id="badgePendientes">2</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="badge-admin-chip">Admin activo</span>
+                        <button type="button" class="btn btn-mac-outline btn-sm px-3" id="btnLogout">Salir</button>
+                    </div>
+                </div>
+            </div>
         </nav>
-        <div class="nav-der">
-            <a href="login.html">Acceso Técnico</a>
+
+        <div class="admin-ribbon">
+            <div class="container d-flex flex-wrap align-items-center justify-content-between gap-2 py-2">
+                <span class="small fw-bold font-mono">ZONA PROTEGIDA — PANEL TÉCNICO</span>
+                <div class="d-flex flex-wrap gap-2">
+                    <a href="dispositivo_form.html" class="btn btn-mac-sage btn-xs">+ Agregar dispositivo</a>
+                    <a href="catalogo.html" class="btn btn-mac-soft btn-xs">Ir al catálogo</a>
+                </div>
+            </div>
         </div>
     </header>
 
-    <main>
-        <section>
-            <h2>Cotizaciones Recibidas</h2>
-            <p><em>Zona Protegida. Solo visible con login.</em></p>
-            
-            <table border="1">
-                <thead>
-                    <tr>
-                        <th>Fecha</th>
-                        <th>WhatsApp</th>
-                        <th>Equipo</th>
-                        <th>Estado</th>
-                        <th>Detalles</th>
-                        <th>Acción</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>03/11/2026</td>
-                        <td>2926-XXXXXX</td>
-                        <td>Samsung A15</td>
-                        <td>Pantalla Rota</td>
-                        <td>Módulo original astillado, táctil funciona.</td>
-                        <td><button>Marcar como contactado</button></td>
-                    </tr>
-                    <tr>
-                        <td>02/11/2026</td>
-                        <td>2926-YYYYYY</td>
-                        <td>Moto G52</td>
-                        <td>No enciende</td>
-                        <td>Cayó al agua. No carga.</td>
-                        <td><button>Marcar como contactado</button></td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
+    <main class="container py-4">
+        <div class="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-4">
+            <div>
+                <span class="font-mono small text-muted-mac text-uppercase">Gestión interna</span>
+                <h1 class="h2 fw-bold mb-0">Panel de Administración</h1>
+            </div>
+            <ul class="nav nav-pills nav-pills-mac gap-2" id="adminTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="tab-cotizaciones-btn" data-bs-toggle="pill" data-bs-target="#tab-cotizaciones" type="button" role="tab">
+                        Cotizaciones Recibidas
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="tab-carrusel-btn" data-bs-toggle="pill" data-bs-target="#tab-carrusel" type="button" role="tab">
+                        Carrusel Destacado
+                    </button>
+                </li>
+            </ul>
+        </div>
+
+        <div id="adminFeedback" class="alert d-none mb-4" role="alert"></div>
+
+        <div class="tab-content">
+            <!-- TAB 1: COTIZACIONES -->
+            <section class="tab-pane fade show active" id="tab-cotizaciones" role="tabpanel">
+                <div class="card card-mac">
+                    <div class="table-responsive">
+                        <table class="table table-mac mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th>WhatsApp</th>
+                                    <th>Equipo</th>
+                                    <th>Estado Equipo</th>
+                                    <th>Detalles</th>
+                                    <th>Seguimiento</th>
+                                    <th class="text-end">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tablaCotizaciones">
+                                <tr>
+                                    <td class="font-mono small">03/11/2026</td>
+                                    <td class="fw-semibold">2926-XXXXXX</td>
+                                    <td><strong>Samsung</strong> Galaxy A15</td>
+                                    <td>Pantalla Rota</td>
+                                    <td class="small text-muted-mac">Módulo original astillado, táctil funciona.</td>
+                                    <td><span class="badge rounded-pill badge-estado-pendiente">Pendiente</span></td>
+                                    <td class="text-end">
+                                        <div class="d-inline-flex flex-wrap justify-content-end gap-1">
+                                            <button type="button" class="btn btn-mac-soft btn-xs">Leída</button>
+                                            <button type="button" class="btn btn-mac-sage btn-xs">Contactada</button>
+                                            <button type="button" class="btn btn-mac-danger btn-xs">Eliminar</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="font-mono small">02/11/2026</td>
+                                    <td class="fw-semibold">2926-YYYYYY</td>
+                                    <td><strong>Motorola</strong> Moto G52</td>
+                                    <td>No enciende</td>
+                                    <td class="small text-muted-mac">Cayó al agua. No carga.</td>
+                                    <td><span class="badge rounded-pill badge-estado-leida">Leída</span></td>
+                                    <td class="text-end">
+                                        <div class="d-inline-flex flex-wrap justify-content-end gap-1">
+                                            <button type="button" class="btn btn-mac-sage btn-xs">Contactada</button>
+                                            <button type="button" class="btn btn-mac-danger btn-xs">Eliminar</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 2: CARRUSEL -->
+            <section class="tab-pane fade" id="tab-carrusel" role="tabpanel">
+                <div class="card card-mac p-4">
+                    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+                        <div>
+                            <h2 class="h5 fw-bold mb-1">Dispositivos en el carrusel de Inicio</h2>
+                            <p class="small text-muted-mac mb-0">Seleccioná qué equipos querés destacar y definí su orden de aparición.</p>
+                        </div>
+                        <a href="dispositivo_form.html" class="btn btn-mac-sage btn-sm px-3">+ Nuevo dispositivo</a>
+                    </div>
+
+                    <form id="formCarrusel">
+                        <div class="table-responsive">
+                            <table class="table table-mac mb-3">
+                                <thead>
+                                    <tr>
+                                        <th>Destacar</th>
+                                        <th>Orden</th>
+                                        <th>Dispositivo</th>
+                                        <th>Specs</th>
+                                        <th>Precio</th>
+                                        <th class="text-end">Editar</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tablaCarrusel">
+                                    <tr>
+                                        <td>
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" name="destacados[]" value="1" checked>
+                                            </div>
+                                        </td>
+                                        <td style="width: 90px;">
+                                            <input type="number" class="form-control form-control-sm input-mac" name="orden[1]" value="1" min="1">
+                                        </td>
+                                        <td><strong>Samsung</strong> Galaxy A15 4G</td>
+                                        <td class="small text-muted-mac">128GB / 4GB RAM</td>
+                                        <td class="font-mono fw-semibold">$250.000</td>
+                                        <td class="text-end">
+                                            <a href="dispositivo_form.html?id=1" class="btn btn-mac-soft btn-xs">Editar ficha</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" name="destacados[]" value="2" checked>
+                                            </div>
+                                        </td>
+                                        <td style="width: 90px;">
+                                            <input type="number" class="form-control form-control-sm input-mac" name="orden[2]" value="2" min="1">
+                                        </td>
+                                        <td><strong>Motorola</strong> Moto G52</td>
+                                        <td class="small text-muted-mac">128GB / 6GB RAM</td>
+                                        <td class="font-mono fw-semibold">$180.000</td>
+                                        <td class="text-end">
+                                            <a href="dispositivo_form.html?id=2" class="btn btn-mac-soft btn-xs">Editar ficha</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" name="destacados[]" value="4">
+                                            </div>
+                                        </td>
+                                        <td style="width: 90px;">
+                                            <input type="number" class="form-control form-control-sm input-mac" name="orden[4]" value="0" min="0">
+                                        </td>
+                                        <td><strong>Samsung</strong> Galaxy S8</td>
+                                        <td class="small text-muted-mac">64GB / 4GB RAM</td>
+                                        <td class="font-mono fw-semibold">$90.000</td>
+                                        <td class="text-end">
+                                            <a href="dispositivo_form.html?id=4" class="btn btn-mac-soft btn-xs">Editar ficha</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" class="btn btn-mac-dark px-4 py-2">Guardar cambios del carrusel</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </div>
     </main>
+
+    <footer class="footer-mac mt-5">
+        <div class="container py-4">
+            <div class="row gy-3 align-items-center">
+                <div class="col-md-6">
+                    <div class="d-flex align-items-center gap-2 mb-1">
+                        <span class="logo-pill logo-pill-sm">RT</span>
+                        <strong class="font-mono">RescaTix Móviles</strong>
+                    </div>
+                    <p class="small text-muted-mac mb-0">Equipos probados, reparados y listos para una segunda vida.</p>
+                </div>
+                <div class="col-md-6 text-md-end small">
+                    <p class="mb-1">Email: <a href="mailto:RescaTix@gmail.com" class="link-mac">RescaTix@gmail.com</a></p>
+                    <p class="mb-1">Teléfono: <a href="https://wa.me/5492926516982" target="_blank" rel="noopener" class="link-mac">+54 9 2926-516982</a></p>
+                    <p class="text-muted-mac mb-0">&copy; 2026 RescaTix Móviles. Todos los derechos reservados.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

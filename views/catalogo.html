@@ -4,98 +4,130 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Catálogo - RescaTix</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel ="stylesheet" href="../public/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../public/styles.css">
 </head>
-<body class="bg-retro">
-    <header class="navega-bar">
-        <div class="nav-izq">
-            <a href="inicio.html" class="logo-rt"><strong>RT</strong></a>
-        </div>
-        <nav class="nav-centro">
-            <ul>
-                <li><a href="catalogo.html">Catalogo</a></li>
-                <li><a href="inicio.html">Inicio</a></li>
-                <li><a href="cotizar.html">Cotizar</a></li>
-            </ul>
+<body class="bg-mac">
+
+    <header>
+        <nav class="navbar navbar-expand-lg navega-bar">
+            <div class="container">
+                <a href="inicio.html" class="navbar-brand logo-rt d-flex align-items-center gap-2">
+                    <span class="logo-pill">RT</span>
+                    <span class="logo-text">RescaTix</span>
+                </a>
+                <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navPrincipal" aria-controls="navPrincipal" aria-expanded="false" aria-label="Abrir menú">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navPrincipal">
+                    <ul class="navbar-nav mx-auto gap-lg-3 my-2 my-lg-0">
+                        <li class="nav-item"><a class="nav-link nav-mac-link" href="inicio.html">Inicio</a></li>
+                        <li class="nav-item"><a class="nav-link nav-mac-link active" href="catalogo.html">Catálogo</a></li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-mac-link solo-publico" href="cotizar.html">Cotizar</a>
+                            <a class="nav-link nav-mac-link solo-admin d-inline-flex align-items-center gap-2" href="admin.html">
+                                <span>Cotizaciones</span>
+                                <span class="badge badge-rose rounded-pill" id="badgePendientes">2</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="d-flex align-items-center gap-2">
+                        <a href="login.html" class="btn btn-mac-dark btn-sm px-3 solo-publico">Acceso Técnico</a>
+                        <span class="badge-admin-chip solo-admin">Admin activo</span>
+                        <button type="button" class="btn btn-mac-outline btn-sm px-3 solo-admin" id="btnLogout">Salir</button>
+                    </div>
+                </div>
+            </div>
         </nav>
-        <div class="nav-der">
-            <a href="login.html">Acceso Técnico</a>
+
+        <div class="admin-ribbon solo-admin">
+            <div class="container d-flex flex-wrap align-items-center justify-content-between gap-2 py-2">
+                <span class="small fw-bold font-mono">MODO ADMINISTRADOR</span>
+                <div class="d-flex flex-wrap gap-2">
+                    <a href="dispositivo_form.html" class="btn btn-mac-sage btn-xs">+ Agregar dispositivo</a>
+                    <a href="admin.html#carrusel" class="btn btn-mac-rose btn-xs">Editar carrusel</a>
+                    <a href="admin.html#cotizaciones" class="btn btn-mac-soft btn-xs">Panel admin</a>
+                </div>
+            </div>
         </div>
     </header>
 
-<main class="container-fluid my-4 px-4">
-        <div class="row">
-            
-            <aside class="col-12 col-md-3 mb-4">
-                <div class="panel-filtros p-3">
-                    <h3 class="fs-5 fw-bold mb-3">Filtros de Búsqueda</h3>
-                    <form action="catalogo.html" method="GET">
-                        
+    <main class="container py-4">
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+            <div>
+                <span class="font-mono small text-muted-mac text-uppercase">Stock verificado</span>
+                <h1 class="h2 fw-bold mb-0">Catálogo de Equipos</h1>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+                <span class="spec-chip font-mono" id="contadorResultados">6 equipos</span>
+                <a href="dispositivo_form.html" class="btn btn-mac-sage px-3 solo-admin">+ Agregar dispositivo</a>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <aside class="col-12 col-lg-3">
+                <div class="panel-filtros p-4 sticky-lg-top" style="top: 1.5rem;">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h2 class="h6 fw-bold mb-0 font-mono text-uppercase">Filtros</h2>
+                        <button type="button" id="btnLimpiarFiltros" class="btn btn-link p-0 small link-mac">Limpiar</button>
+                    </div>
+
+                    <form id="formFiltros" action="catalogo.html" method="GET">
                         <div class="mb-3">
-                            <label for="busqueda" class="form-label fw-bold">Modelo:</label>
+                            <label for="busqueda" class="form-label small fw-semibold">Modelo:</label>
                             <input type="search" name="busqueda" id="busqueda" class="form-control form-control-retro" placeholder="Ej: A15, G52...">
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label fw-bold">Marca</label>
+                            <span class="form-label small fw-semibold d-block">Marca</span>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" name="marca[]" value="samsung" id="marca-samsung">
-                                <label class="form-check-label" for="marca-samsung">Samsung</label>
+                                <label class="form-check-label small" for="marca-samsung">Samsung</label>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" name="marca[]" value="motorola" id="marca-motorola">
-                                <label class="form-check-label" for="marca-motorola">Motorola</label>
+                                <label class="form-check-label small" for="marca-motorola">Motorola</label>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" name="marca[]" value="apple" id="marca-apple">
-                                <label class="form-check-label" for="marca-apple">Apple</label>
+                                <label class="form-check-label small" for="marca-apple">Apple</label>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" name="marca[]" value="xiaomi" id="marca-xiaomi">
-                                <label class="form-check-label" for="marca-xiaomi">Xiaomi</label>
+                                <label class="form-check-label small" for="marca-xiaomi">Xiaomi</label>
                             </div>
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label fw-bold">Almacenamiento</label>
+                            <span class="form-label small fw-semibold d-block">Almacenamiento</span>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" name="storage[]" value="64" id="rom-64">
-                                <label class="form-check-label" for="rom-64">64 GB</label>
+                                <label class="form-check-label small" for="rom-64">64 GB</label>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" name="storage[]" value="128" id="rom-128">
-                                <label class="form-check-label" for="rom-128">128 GB</label>
+                                <label class="form-check-label small" for="rom-128">128 GB</label>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" name="storage[]" value="256" id="rom-256">
-                                <label class="form-check-label" for="rom-256">256 GB</label>
+                                <label class="form-check-label small" for="rom-256">256 GB</label>
                             </div>
                         </div>
 
                         <div class="mb-4">
-                            <label class="form-label fw-bold">Rango de Precio</label>
+                            <span class="form-label small fw-semibold d-block">Rango de Precio</span>
                             <div class="d-flex align-items-center gap-2">
                                 <div class="flex-grow-1">
-                                    <label for="precio_min" class="form-label small text-muted mb-1">Mínimo</label>
-                                    <input type="number"
-                                           name="precio_min"
-                                           id="precio_min"
-                                           class="form-control form-control-retro"
-                                           placeholder="$50.000"
-                                           min="0"
-                                           step="5000">
+                                    <label for="precio_min" class="form-label tiny text-muted-mac mb-1">Mínimo</label>
+                                    <input type="number" name="precio_min" id="precio_min" class="form-control form-control-retro" placeholder="$50.000" min="0" step="5000">
                                 </div>
-                                <span class="pt-4 fw-bold text-muted">-</span>
+                                <span class="pt-3 fw-bold text-muted-mac">-</span>
                                 <div class="flex-grow-1">
-                                    <label for="precio_max" class="form-label small text-muted mb-1">Máximo</label>
-                                    <input type="number"
-                                           name="precio_max"
-                                           id="precio_max"
-                                           class="form-control form-control-retro"
-                                           placeholder="$1.000.000"
-                                           min="0"
-                                           step="5000">
+                                    <label for="precio_max" class="form-label tiny text-muted-mac mb-1">Máximo</label>
+                                    <input type="number" name="precio_max" id="precio_max" class="form-control form-control-retro" placeholder="$1.000.000" min="0" step="5000">
                                 </div>
                             </div>
                         </div>
@@ -105,20 +137,29 @@
                 </div>
             </aside>
 
-            <section class="col-12 col-md-9">
-                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-                    
+            <section class="col-12 col-lg-9">
+                <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4" id="grillaCatalogo">
 
                     <div class="col">
                         <article class="card h-100 card-retro">
                             <div class="card-img-container">
-                                <img src="../public/images/A15.avif" class="card-img-top" alt="Samsung Galaxy A15 4G">
+                                <span class="badge-destacado font-mono">★ DESTACADO</span>
+                                <img src="../public/images/A15.avif" alt="Samsung Galaxy A15 4G">
                             </div>
-                            <div class="card-body d-flex flex-column">
-                                <h3 class="card-title fs-6">Samsung, Galaxy A15 4G</h3>
-                                <p class="card-text text-muted small mb-2">128GB - 100% Batería</p>
+                            <div class="card-body d-flex flex-column p-4">
+                                <span class="font-mono small text-muted-mac">Samsung</span>
+                                <h3 class="h5 fw-bold mb-2">Galaxy A15 4G</h3>
+                                <div class="d-flex flex-wrap gap-1 mb-2">
+                                    <span class="spec-chip">128GB</span>
+                                    <span class="spec-chip">4GB RAM</span>
+                                </div>
+                                <p class="small text-muted-mac mb-3">Batería: 100% (Original)</p>
                                 <p class="precio fw-bold mt-auto mb-3">$250.000</p>
-                                <a href="detalle.html" class="btn btn-outline-retro w-100">Ver detalle</a>
+                                <a href="detalle.html?id=1" class="btn btn-outline-retro w-100">Ver detalle</a>
+                                <div class="d-flex gap-2 mt-2 pt-2 border-top border-mac solo-admin">
+                                    <a href="dispositivo_form.html?id=1" class="btn btn-mac-soft btn-sm flex-grow-1">Editar</a>
+                                    <button type="button" class="btn btn-mac-danger btn-sm flex-grow-1" data-eliminar-id="1">Eliminar</button>
+                                </div>
                             </div>
                         </article>
                     </div>
@@ -126,13 +167,23 @@
                     <div class="col">
                         <article class="card h-100 card-retro">
                             <div class="card-img-container">
-                                <img src="../public/images/placeholder.jpg" class="card-img-top" alt="Motorola Moto G52">
+                                <span class="badge-destacado font-mono">★ DESTACADO</span>
+                                <img src="../public/images/default.avif" alt="Motorola Moto G52">
                             </div>
-                            <div class="card-body d-flex flex-column">
-                                <h3 class="card-title fs-6">Motorola, Moto G52</h3>
-                                <p class="card-text text-muted small mb-2">128GB - Pin nuevo</p>
+                            <div class="card-body d-flex flex-column p-4">
+                                <span class="font-mono small text-muted-mac">Motorola</span>
+                                <h3 class="h5 fw-bold mb-2">Moto G52</h3>
+                                <div class="d-flex flex-wrap gap-1 mb-2">
+                                    <span class="spec-chip">128GB</span>
+                                    <span class="spec-chip">6GB RAM</span>
+                                </div>
+                                <p class="small text-muted-mac mb-3">Batería: 92% - Pin nuevo</p>
                                 <p class="precio fw-bold mt-auto mb-3">$180.000</p>
-                                <a href="detalle.html" class="btn btn-outline-retro w-100">Ver detalle</a>
+                                <a href="detalle.html?id=2" class="btn btn-outline-retro w-100">Ver detalle</a>
+                                <div class="d-flex gap-2 mt-2 pt-2 border-top border-mac solo-admin">
+                                    <a href="dispositivo_form.html?id=2" class="btn btn-mac-soft btn-sm flex-grow-1">Editar</a>
+                                    <button type="button" class="btn btn-mac-danger btn-sm flex-grow-1" data-eliminar-id="2">Eliminar</button>
+                                </div>
                             </div>
                         </article>
                     </div>
@@ -140,13 +191,23 @@
                     <div class="col">
                         <article class="card h-100 card-retro">
                             <div class="card-img-container">
-                                <img src="../public/images/placeholder.jpg" class="card-img-top" alt="Apple iPhone SE 2020">
+                                <span class="badge-destacado font-mono">★ DESTACADO</span>
+                                <img src="../public/images/default.avif" alt="Apple iPhone SE 2020">
                             </div>
-                            <div class="card-body d-flex flex-column">
-                                <h3 class="card-title fs-6">Apple, iPhone SE 2020</h3>
-                                <p class="card-text text-muted small mb-2">64GB - 85% Batería</p>
+                            <div class="card-body d-flex flex-column p-4">
+                                <span class="font-mono small text-muted-mac">Apple</span>
+                                <h3 class="h5 fw-bold mb-2">iPhone SE 2020</h3>
+                                <div class="d-flex flex-wrap gap-1 mb-2">
+                                    <span class="spec-chip">64GB</span>
+                                    <span class="spec-chip">3GB RAM</span>
+                                </div>
+                                <p class="small text-muted-mac mb-3">Batería: 85%</p>
                                 <p class="precio fw-bold mt-auto mb-3">$200.000</p>
-                                <a href="detalle.html" class="btn btn-outline-retro w-100">Ver detalle</a>
+                                <a href="detalle.html?id=3" class="btn btn-outline-retro w-100">Ver detalle</a>
+                                <div class="d-flex gap-2 mt-2 pt-2 border-top border-mac solo-admin">
+                                    <a href="dispositivo_form.html?id=3" class="btn btn-mac-soft btn-sm flex-grow-1">Editar</a>
+                                    <button type="button" class="btn btn-mac-danger btn-sm flex-grow-1" data-eliminar-id="3">Eliminar</button>
+                                </div>
                             </div>
                         </article>
                     </div>
@@ -154,13 +215,22 @@
                     <div class="col">
                         <article class="card h-100 card-retro">
                             <div class="card-img-container">
-                                <img src="../public/images/placeholder.jpg" class="card-img-top" alt="Samsung Galaxy S8">
+                                <img src="../public/images/default.avif" alt="Samsung Galaxy S8">
                             </div>
-                            <div class="card-body d-flex flex-column">
-                                <h3 class="card-title fs-6">Samsung, Galaxy S8</h3>
-                                <p class="card-text text-muted small mb-2">64GB - Pantalla OLED</p>
+                            <div class="card-body d-flex flex-column p-4">
+                                <span class="font-mono small text-muted-mac">Samsung</span>
+                                <h3 class="h5 fw-bold mb-2">Galaxy S8</h3>
+                                <div class="d-flex flex-wrap gap-1 mb-2">
+                                    <span class="spec-chip">64GB</span>
+                                    <span class="spec-chip">4GB RAM</span>
+                                </div>
+                                <p class="small text-muted-mac mb-3">Batería: 82% - Pantalla OLED</p>
                                 <p class="precio fw-bold mt-auto mb-3">$90.000</p>
-                                <a href="detalle.html" class="btn btn-outline-retro w-100">Ver detalle</a>
+                                <a href="detalle.html?id=4" class="btn btn-outline-retro w-100">Ver detalle</a>
+                                <div class="d-flex gap-2 mt-2 pt-2 border-top border-mac solo-admin">
+                                    <a href="dispositivo_form.html?id=4" class="btn btn-mac-soft btn-sm flex-grow-1">Editar</a>
+                                    <button type="button" class="btn btn-mac-danger btn-sm flex-grow-1" data-eliminar-id="4">Eliminar</button>
+                                </div>
                             </div>
                         </article>
                     </div>
@@ -168,13 +238,23 @@
                     <div class="col">
                         <article class="card h-100 card-retro">
                             <div class="card-img-container">
-                                <img src="../public/images/placeholder.jpg" class="card-img-top" alt="Motorola Edge 30">
+                                <span class="badge-destacado font-mono">★ DESTACADO</span>
+                                <img src="../public/images/default.avif" alt="Motorola Edge 30">
                             </div>
-                            <div class="card-body d-flex flex-column">
-                                <h3 class="card-title fs-6">Motorola, Edge 30</h3>
-                                <p class="card-text text-muted small mb-2">256GB - Impecable</p>
+                            <div class="card-body d-flex flex-column p-4">
+                                <span class="font-mono small text-muted-mac">Motorola</span>
+                                <h3 class="h5 fw-bold mb-2">Edge 30</h3>
+                                <div class="d-flex flex-wrap gap-1 mb-2">
+                                    <span class="spec-chip">256GB</span>
+                                    <span class="spec-chip">8GB RAM</span>
+                                </div>
+                                <p class="small text-muted-mac mb-3">Batería: 95% - Impecable</p>
                                 <p class="precio fw-bold mt-auto mb-3">$320.000</p>
-                                <a href="detalle.html" class="btn btn-outline-retro w-100">Ver detalle</a>
+                                <a href="detalle.html?id=5" class="btn btn-outline-retro w-100">Ver detalle</a>
+                                <div class="d-flex gap-2 mt-2 pt-2 border-top border-mac solo-admin">
+                                    <a href="dispositivo_form.html?id=5" class="btn btn-mac-soft btn-sm flex-grow-1">Editar</a>
+                                    <button type="button" class="btn btn-mac-danger btn-sm flex-grow-1" data-eliminar-id="5">Eliminar</button>
+                                </div>
                             </div>
                         </article>
                     </div>
@@ -182,13 +262,22 @@
                     <div class="col">
                         <article class="card h-100 card-retro">
                             <div class="card-img-container">
-                                <img src="../public/images/placeholder.jpg" class="card-img-top" alt="Apple iPhone 11">
+                                <img src="../public/images/default.avif" alt="Apple iPhone 11">
                             </div>
-                            <div class="card-body d-flex flex-column">
-                                <h3 class="card-title fs-6">Apple, iPhone 11</h3>
-                                <p class="card-text text-muted small mb-2">128GB - 79% Batería</p>
+                            <div class="card-body d-flex flex-column p-4">
+                                <span class="font-mono small text-muted-mac">Apple</span>
+                                <h3 class="h5 fw-bold mb-2">iPhone 11</h3>
+                                <div class="d-flex flex-wrap gap-1 mb-2">
+                                    <span class="spec-chip">128GB</span>
+                                    <span class="spec-chip">4GB RAM</span>
+                                </div>
+                                <p class="small text-muted-mac mb-3">Batería: 79%</p>
                                 <p class="precio fw-bold mt-auto mb-3">$380.000</p>
-                                <a href="detalle.html" class="btn btn-outline-retro w-100">Ver detalle</a>
+                                <a href="detalle.html?id=6" class="btn btn-outline-retro w-100">Ver detalle</a>
+                                <div class="d-flex gap-2 mt-2 pt-2 border-top border-mac solo-admin">
+                                    <a href="dispositivo_form.html?id=6" class="btn btn-mac-soft btn-sm flex-grow-1">Editar</a>
+                                    <button type="button" class="btn btn-mac-danger btn-sm flex-grow-1" data-eliminar-id="6">Eliminar</button>
+                                </div>
                             </div>
                         </article>
                     </div>
@@ -196,17 +285,36 @@
                 </div>
 
                 <nav class="mt-5 d-flex justify-content-center" aria-label="Navegación de páginas">
-                    <ul class="pagination pagination-retro">
+                    <ul class="pagination pagination-retro" id="paginacionCatalogo">
                         <li class="page-item disabled"><a class="page-link" href="#">« Anterior</a></li>
                         <li class="page-item active"><a class="page-link" href="#">1</a></li>
                         <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
                         <li class="page-item"><a class="page-link" href="#">Siguiente »</a></li>
                     </ul>
                 </nav>
             </section>
-
         </div>
     </main>
+
+    <footer class="footer-mac mt-5">
+        <div class="container py-4">
+            <div class="row gy-3 align-items-center">
+                <div class="col-md-6">
+                    <div class="d-flex align-items-center gap-2 mb-1">
+                        <span class="logo-pill logo-pill-sm">RT</span>
+                        <strong class="font-mono">RescaTix Móviles</strong>
+                    </div>
+                    <p class="small text-muted-mac mb-0">Equipos probados, reparados y listos para una segunda vida.</p>
+                </div>
+                <div class="col-md-6 text-md-end small">
+                    <p class="mb-1">Email: <a href="mailto:RescaTix@gmail.com" class="link-mac">RescaTix@gmail.com</a></p>
+                    <p class="mb-1">Teléfono: <a href="https://wa.me/5492926516982" target="_blank" rel="noopener" class="link-mac">+54 9 2926-516982</a></p>
+                    <p class="text-muted-mac mb-0">&copy; 2026 RescaTix Móviles. Todos los derechos reservados.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
