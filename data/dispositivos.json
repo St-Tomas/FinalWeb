@@ -1,0 +1,158 @@
+[
+    {
+        "id": 1,
+        "marca": "Samsung",
+        "modelo": "Galaxy A15 4G",
+        "almacenamiento": 128,
+        "ram": 4,
+        "condicion_bateria": "100% (Original)",
+        "detalle": "Módulo original de fábrica, sin rayones. Limpieza en puerto de carga realizada. Funciona perfecto.",
+        "precio": 250000,
+        "imagen": "a15ba.avif",
+        "destacado": true,
+        "orden_carrusel": 1,
+        "colores": [
+            {
+                "nombre": "Blanco",
+                "hex": "#f6f5f4",
+                "imagenes": [
+                    "a15bw.avif"
+                ]
+            },
+            {
+                "nombre": "Amarillo",
+                "hex": "#f9f06b",
+                "imagenes": [
+                    "a15ba.avif"
+                ]
+            }
+        ],
+        "imagenes": [
+            "a15ba.avif"
+        ]
+    },
+    {
+        "id": 2,
+        "marca": "Motorola",
+        "modelo": "Moto G52",
+        "almacenamiento": 128,
+        "ram": 6,
+        "condicion_bateria": "92% (Excelente)",
+        "detalle": "Pin de carga nuevo recién instalado. Pantalla pOLED impecable y sensores verificados.",
+        "precio": 180000,
+        "imagen": "g52bb.png",
+        "destacado": true,
+        "orden_carrusel": 2,
+        "colores": [
+            {
+                "nombre": "Negro",
+                "hex": "#2b2e2d",
+                "imagenes": [
+                    "g52bb.png",
+                    "g52fb.png",
+                    "g52bab.png"
+                ]
+            },
+            {
+                "nombre": "Gris",
+                "hex": "#deddda",
+                "imagenes": [
+                    "g52bw.png",
+                    "g52fw.png",
+                    "g52baw.png"
+                ]
+            }
+        ],
+        "imagenes": [
+            "g52bb.png"
+        ]
+    },
+    {
+        "id": 3,
+        "marca": "Apple",
+        "modelo": "iPhone SE 2020",
+        "almacenamiento": 64,
+        "ram": 3,
+        "condicion_bateria": "85% (Original)",
+        "detalle": "Touch ID y True Tone operativos. Mínimas marcas de uso en marco, vidrio templado colocado.",
+        "precio": 200000,
+        "imagen": "ipseb.png",
+        "destacado": true,
+        "orden_carrusel": 3,
+        "imagenes": [
+            "ipseb.png"
+        ],
+        "colores": []
+    },
+    {
+        "id": 4,
+        "marca": "Samsung",
+        "modelo": "Galaxy S8",
+        "almacenamiento": 64,
+        "ram": 4,
+        "condicion_bateria": "82% (Buena)",
+        "detalle": "Pantalla OLED sin manchas ni líneas. Ideal como equipo secundario o uso diario liviano.",
+        "precio": 90000,
+        "imagen": "s8b.webp",
+        "destacado": true,
+        "orden_carrusel": 4,
+        "imagenes": [
+            "s8b.webp"
+        ],
+        "colores": []
+    },
+    {
+        "id": 5,
+        "marca": "Motorola",
+        "modelo": "Edge 30",
+        "almacenamiento": 256,
+        "ram": 8,
+        "condicion_bateria": "95% (Original)",
+        "detalle": "Estado impecable, pantalla 144Hz. Incluye limpieza interna preventiva y prueba completa.",
+        "precio": 320000,
+        "imagen": "edge30b.png",
+        "destacado": true,
+        "orden_carrusel": 5,
+        "imagenes": [
+            "edge30b.png",
+            "edge30f.png",
+            "edge30l.png",
+            "edge30ba.png"
+        ],
+        "colores": []
+    },
+    {
+        "id": 6,
+        "marca": "Apple",
+        "modelo": "iPhone 11",
+        "almacenamiento": 128,
+        "ram": 4,
+        "condicion_bateria": "79% (Original)",
+        "detalle": "Face ID andando al 100%, cámaras limpias y sin abrir. Listo para usar con cualquier empresa.",
+        "precio": 380000,
+        "imagen": "ip11b.png",
+        "destacado": true,
+        "orden_carrusel": 6,
+        "imagenes": [
+            "ip11b.png"
+        ],
+        "colores": []
+    },
+    {
+        "id": 7,
+        "marca": "Xiaomi",
+        "modelo": "Xiaomi Redmi 13C",
+        "almacenamiento": 256,
+        "ram": 4,
+        "condicion_bateria": "100%",
+        "detalle": "Detalles estéticos en bordes",
+        "precio": 150000,
+        "imagen": "r13cb.png",
+        "imagenes": [
+            "r13cb.png"
+        ],
+        "colores": [],
+        "destacado": false,
+        "orden_carrusel": 0
+    }
+]

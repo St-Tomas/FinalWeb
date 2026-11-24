@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle del Equipo - RescaTix</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../public/styles.css">
+</head>
+<body class="bg-mac">
+
+    <header>
+        <nav class="navbar navbar-expand-lg navega-bar">
+            <div class="container">
+                <a href="inicio.html" class="navbar-brand logo-rt d-flex align-items-center gap-2">
+                    <span class="logo-pill">RT</span>
+                    <span class="logo-text">RescaTix</span>
+                </a>
+                <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navPrincipal" aria-controls="navPrincipal" aria-expanded="false" aria-label="Abrir menú">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navPrincipal">
+                    <ul class="navbar-nav mx-auto gap-lg-3 my-2 my-lg-0">
+                        <li class="nav-item"><a class="nav-link nav-mac-link" href="inicio.html">Inicio</a></li>
+                        <li class="nav-item"><a class="nav-link nav-mac-link active" href="catalogo.html">Catálogo</a></li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-mac-link solo-publico" href="cotizar.html">Cotizar</a>
+                            <a class="nav-link nav-mac-link solo-admin d-inline-flex align-items-center gap-2" href="admin.html">
+                                <span>Cotizaciones</span>
+                                <span class="badge badge-rose rounded-pill d-none" id="badgePendientes">0</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="d-flex align-items-center gap-2">
+                        <a href="login.html" class="btn btn-mac-dark btn-sm px-3 solo-publico">Acceso Técnico</a>
+                        <span class="badge-admin-chip solo-admin">Admin activo</span>
+                        <button type="button" class="btn btn-mac-outline btn-sm px-3 solo-admin" id="btnLogout">Salir</button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="admin-ribbon solo-admin">
+            <div class="container d-flex flex-wrap align-items-center justify-content-between gap-2 py-2">
+                <span class="small fw-bold font-mono">MODO ADMINISTRADOR</span>
+                <div class="d-flex flex-wrap gap-2">
+                    <a href="dispositivo_form.html" class="btn btn-mac-sage btn-xs">+ Agregar dispositivo</a>
+                    <a href="admin.html#carrusel" class="btn btn-mac-rose btn-xs">Editar carrusel</a>
+                    <a href="admin.html#cotizaciones" class="btn btn-mac-soft btn-xs">Panel admin</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container py-4">
+        <div class="mb-3">
+            <a href="catalogo.html" class="link-mac small font-mono">← Volver al catálogo</a>
+        </div>
+
+        <article class="card card-mac p-4 p-md-5" id="detalleEquipo">
+            <div class="row g-4 g-lg-5 align-items-start">
+                <div class="col-12 col-md-6">
+                    <div class="galeria-detalle">
+                        <div class="galeria-thumbs d-none" id="galeriaThumbs" role="listbox" aria-label="Miniaturas del equipo"></div>
+                        <div class="detalle-img-box flex-grow-1">
+                            <span class="badge-destacado font-mono d-none" id="detalleDestacado">★ DESTACADO</span>
+                            <button type="button" class="galeria-arrow galeria-arrow-prev d-none" id="galeriaPrev" aria-label="Imagen anterior">&#8592;</button>
+                            <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Imagen del dispositivo" id="detalleImagen" class="img-fluid">
+                            <button type="button" class="galeria-arrow galeria-arrow-next d-none" id="galeriaNext" aria-label="Imagen siguiente">&#8594;</button>
+                            <span class="galeria-contador font-mono d-none" id="galeriaContador">1 / 1</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <span class="font-mono small text-muted-mac text-uppercase" id="detalleMarca">...</span>
+                    <h1 class="h2 fw-bold mb-2" id="detalleModelo">Cargando equipo...</h1>
+                    <p class="precio-grande fw-bold mb-4" id="detallePrecio">---</p>
+
+                    <div id="bloqueColores" class="mb-4 d-none">
+                        <span class="tiny text-muted-mac d-block font-mono mb-2">
+                            COLOR: <strong class="text-dark" id="colorSeleccionadoTexto">-</strong>
+                        </span>
+                        <div id="selectorColores" class="d-flex flex-wrap gap-3" role="radiogroup" aria-label="Colores disponibles"></div>
+                    </div>
+
+                    <div class="row g-2 mb-4">
+                        <div class="col-6 col-sm-4">
+                            <div class="spec-box">
+                                <span class="tiny text-muted-mac d-block font-mono">ALMACENAMIENTO</span>
+                                <strong id="detalleAlmacenamiento">-</strong>
+                            </div>
+                        </div>
+                        <div class="col-6 col-sm-4">
+                            <div class="spec-box">
+                                <span class="tiny text-muted-mac d-block font-mono">MEMORIA RAM</span>
+                                <strong id="detalleRam">-</strong>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-4">
+                            <div class="spec-box spec-box-sage">
+                                <span class="tiny text-muted-mac d-block font-mono">BATERÍA</span>
+                                <strong id="detalleBateria">-</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <h2 class="h6 font-mono text-uppercase text-muted-mac mb-2">Especificaciones y Estado Técnico</h2>
+                        <p class="mb-0 lh-base" id="detalleDescripcion">Cargando especificaciones...</p>
+                    </div>
+
+                    <div class="d-flex flex-wrap gap-2">
+                        <a href="https://wa.me/5492926525813" target="_blank" rel="noopener" id="btnWhatsappComprar" class="btn btn-mac-dark px-4 py-2">
+                            Contactar para comprar
+                        </a>
+                        <a href="#" id="btnEditarDetalle" class="btn btn-mac-sage px-4 py-2 solo-admin">Editar equipo</a>
+                        <button type="button" id="btnEliminarDetalle" class="btn btn-mac-danger px-4 py-2 solo-admin">Eliminar</button>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer class="footer-mac mt-5">
+        <div class="container py-4">
+            <div class="row gy-3 align-items-center">
+                <div class="col-md-6">
+                    <div class="d-flex align-items-center gap-2 mb-1">
+                        <span class="logo-pill logo-pill-sm">RT</span>
+                        <strong class="font-mono">RescaTix Móviles</strong>
+                    </div>
+                    <p class="small text-muted-mac mb-0">Equipos probados, reparados y listos para una segunda vida.</p>
+                </div>
+                <div class="col-md-6 text-md-end small">
+                    <p class="mb-1">Email: <a href="mailto:RescaTix@gmail.com" class="link-mac">RescaTix@gmail.com</a></p>
+                    <p class="mb-1">Teléfono: <a href="https://wa.me/5492926525813" target="_blank" rel="noopener" class="link-mac">+54 9 2926-525813</a></p>
+                    <p class="text-muted-mac mb-0">&copy; 2026 RescaTix Móviles. Todos los derechos reservados.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../public/js/app.js" defer></script>
+    <script src="https://sisciencia.chubut.gov.ar/static/js/accesibilidad-lti.min.js" charset="utf-8" defer></script>
+</body>
+</html>
