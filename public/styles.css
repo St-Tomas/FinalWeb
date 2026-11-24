@@ -21,8 +21,11 @@
     --sombra-hover: 0 14px 30px rgba(43, 46, 45, 0.10);
 }
 
+/* Base */
 body.bg-mac {
     background-color: var(--bg-hueso);
+    background-image: radial-gradient(rgba(43, 46, 45, 0.07) 1px, transparent 1px);
+    background-size: 22px 22px;
     color: var(--tinta);
     font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
     min-height: 100vh;
@@ -50,6 +53,7 @@ main {
     border-color: var(--borde-suave) !important;
 }
 
+/* Visibilidad modo admin */
 body:not(.modo-admin) .solo-admin {
     display: none !important;
 }
@@ -57,11 +61,8 @@ body:not(.modo-admin) .solo-admin {
 body.modo-admin .solo-publico {
     display: none !important;
 }
-body.bg-mac {
-    background-image: radial-gradient(rgba(43, 46, 45, 0.07) 1px, transparent 1px);
-    background-size: 22px 22px;
-}
 
+/* Navbar responsive */
 .navega-bar {
     background-color: var(--sage);
     border-bottom: 1px solid rgba(43, 46, 45, 0.12);
@@ -118,6 +119,7 @@ body.bg-mac {
     background-color: rgba(252, 249, 244, 0.55);
 }
 
+/* Cinta contextual de admin */
 .admin-ribbon {
     background-color: var(--bg-arena);
     border-bottom: 1px solid var(--borde-suave);
@@ -133,6 +135,7 @@ body.bg-mac {
     border: 1px solid rgba(43, 46, 45, 0.12);
 }
 
+/* Hero inicio */
 .hero-macintosh {
     padding: 3rem 0 2rem;
 }
@@ -191,24 +194,20 @@ body.bg-mac {
     max-width: 540px;
 }
 
+/* Carrusel lateral en inicio (sin scrollbar visible) */
 .carrusel-track {
     display: flex;
     gap: 1.25rem;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
-    padding: 0.5rem 0.25rem 1.25rem;
+    padding: 0.5rem 0.25rem 1rem;
     scrollbar-width: none;
-    scrollbar-color: var(--borde-suave) transparent;
+    -ms-overflow-style: none;
 }
 
 .carrusel-track::-webkit-scrollbar {
-    height: 8px;
-}
-
-.carrusel-track::-webkit-scrollbar-thumb {
-    background-color: var(--borde-suave);
-    border-radius: 999px;
+    display: none;
 }
 
 .carrusel-item-card {
@@ -236,6 +235,7 @@ body.bg-mac {
     color: var(--tinta);
 }
 
+/* Cards y paneles */
 .panel-filtros,
 .panel-soft {
     background-color: var(--bg-arena);
@@ -293,6 +293,7 @@ body.bg-mac {
     object-fit: contain;
 }
 
+/* Badges y chips */
 .badge-destacado {
     position: absolute;
     top: 12px;
@@ -335,5 +336,371 @@ body.bg-mac {
     color: var(--tinta);
     font-size: 0.75rem;
     font-weight: 600;
-    padding: 0.25rem 0.6
+    padding: 0.25rem 0.65rem;
+    border-radius: 999px;
+}
+
+.spec-chip-sage {
+    background-color: var(--sage-soft);
+    color: #2A5B4C;
+}
+
+.spec-box {
+    background-color: var(--bg-hueso);
+    border: 1px solid var(--borde-suave);
+    border-radius: var(--radio-md);
+    padding: 0.75rem 1rem;
+}
+
+.spec-box-sage {
+    background-color: var(--sage-soft);
+    border-color: rgba(130, 179, 162, 0.45);
+}
+
+.precio {
+    font-family: 'Space Mono', monospace;
+    font-size: 1.3rem;
+    color: var(--tinta);
+}
+
+.precio-grande {
+    font-family: 'Space Mono', monospace;
+    font-size: 2rem;
+    color: var(--tinta);
+}
+
+/* Inputs y selects */
+.form-control-retro,
+.input-mac {
+    background-color: var(--bg-card);
+    border: 1px solid var(--borde-suave);
+    border-radius: var(--radio-md);
+    color: var(--tinta);
+    padding: 0.6rem 0.9rem;
+}
+
+.form-control-retro:focus,
+.input-mac:focus {
+    background-color: #FFFFFF;
+    border-color: var(--sage);
+    box-shadow: 0 0 0 3px rgba(130, 179, 162, 0.25);
+}
+
+.form-check-input:checked {
+    background-color: var(--sage);
+    border-color: var(--sage);
+}
+
+/* Botones */
+.btn-retro,
+.btn-mac-dark {
+    background-color: var(--tinta);
+    color: var(--bg-card);
+    border: 1px solid var(--tinta);
+    font-weight: 600;
+    border-radius: 999px;
+    transition: all 0.2s ease;
+}
+
+.btn-retro:hover,
+.btn-mac-dark:hover {
+    background-color: #444846;
+    border-color: #444846;
+    color: #fff;
+}
+
+.btn-outline-retro,
+.btn-mac-outline {
+    background-color: transparent;
+    color: var(--tinta);
+    border: 1.5px solid var(--tinta);
+    font-weight: 600;
+    border-radius: 999px;
+    transition: all 0.2s ease;
+}
+
+.btn-outline-retro:hover,
+.btn-mac-outline:hover {
+    background-color: var(--tinta);
+    color: var(--bg-card);
+}
+
+.btn-mac-sage {
+    background-color: var(--sage);
+    color: var(--tinta);
+    border: 1px solid var(--sage);
+    font-weight: 600;
+    border-radius: 999px;
+}
+
+.btn-mac-sage:hover {
+    background-color: var(--sage-hover);
+    border-color: var(--sage-hover);
+    color: var(--tinta);
+}
+
+.btn-mac-rose {
+    background-color: var(--rose);
+    color: #fff;
+    border: 1px solid var(--rose);
+    font-weight: 600;
+    border-radius: 999px;
+}
+
+.btn-mac-rose:hover {
+    background-color: var(--rose-hover);
+    border-color: var(--rose-hover);
+    color: #fff;
+}
+
+.btn-mac-soft {
+    background-color: var(--bg-arena);
+    color: var(--tinta);
+    border: 1px solid var(--borde-suave);
+    font-weight: 600;
+    border-radius: 999px;
+}
+
+.btn-mac-soft:hover {
+    background-color: #DFD4C2;
+    color: var(--tinta);
+}
+
+.btn-mac-danger {
+    background-color: var(--rose-soft);
+    color: #8E443E;
+    border: 1px solid rgba(212, 147, 141, 0.55);
+    font-weight: 600;
+    border-radius: 999px;
+}
+
+.btn-mac-danger:hover {
+    background-color: var(--rose);
+    color: #fff;
+}
+
+.btn-xs {
+    font-size: 0.78rem;
+    padding: 0.28rem 0.75rem;
+}
+
+/* Tabs del panel admin */
+.nav-pills-mac .nav-link {
+    color: var(--tinta);
+    background-color: var(--bg-arena);
+    border: 1px solid var(--borde-suave);
+    border-radius: 999px;
+    font-weight: 600;
+    padding: 0.55rem 1.25rem;
+}
+
+.nav-pills-mac .nav-link.active {
+    background-color: var(--tinta);
+    border-color: var(--tinta);
+    color: var(--bg-card);
+}
+
+/* Tabla admin */
+.table-mac {
+    --bs-table-bg: transparent;
+    --bs-table-border-color: var(--borde-suave);
+    vertical-align: middle;
+}
+
+.table-mac thead th {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    color: var(--tinta-suave);
+    background-color: var(--bg-arena);
+    border-bottom: 1px solid var(--borde-suave);
+    padding: 0.9rem 1rem;
+}
+
+.table-mac tbody td {
+    padding: 0.95rem 1rem;
+}
+
+/* Paginación */
+.pagination-retro .page-link {
+    background-color: var(--bg-card);
+    color: var(--tinta);
+    border: 1px solid var(--borde-suave);
+    border-radius: 10px;
+    font-weight: 600;
+    margin: 0 2px;
+}
+
+.pagination-retro .page-link:hover {
+    background-color: var(--bg-arena);
+    color: var(--tinta);
+}
+
+.pagination-retro .page-item.active .page-link {
+    background-color: var(--tinta);
+    border-color: var(--tinta);
+    color: var(--bg-card);
+}
+
+.pagination-retro .page-item.disabled .page-link {
+    background-color: var(--bg-hueso);
+    color: #A6A198;
+}
+
+/* Footer y links */
+.footer-mac {
+    background-color: var(--bg-arena);
+    border-top: 1px solid var(--borde-suave);
+}
+
+.link-mac {
+    color: var(--tinta);
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: var(--rose);
+    text-underline-offset: 3px;
+}
+
+.link-mac:hover {
+    color: var(--rose-hover);
+}
+
+/* Galería de detalle: miniaturas apiladas + imagen grande */
+.galeria-detalle {
+    display: flex;
+    gap: 0.85rem;
+    align-items: stretch;
+}
+
+.galeria-thumbs {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    width: 72px;
+    flex-shrink: 0;
+}
+
+.galeria-thumb-btn {
+    width: 72px;
+    height: 72px;
+    padding: 6px;
+    border-radius: 12px;
+    border: 1.5px solid var(--borde-suave);
+    background-color: #F2EBE0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.galeria-thumb-btn:hover {
+    border-color: var(--sage);
+    transform: translateY(-1px);
+}
+
+.galeria-thumb-btn.active {
+    border-color: var(--tinta);
+    box-shadow: 0 0 0 2px rgba(43, 46, 45, 0.15);
+    background-color: var(--bg-card);
+}
+
+.galeria-thumb-btn img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.galeria-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid var(--borde-suave);
+    background-color: rgba(252, 249, 244, 0.88);
+    color: var(--tinta);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+    z-index: 2;
+}
+
+.galeria-arrow:hover {
+    background-color: var(--sage);
+    border-color: var(--sage);
+}
+
+.galeria-arrow-prev { left: 10px; }
+.galeria-arrow-next { right: 10px; }
+
+.galeria-contador {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    background-color: rgba(43, 46, 45, 0.78);
+    color: var(--bg-card);
+    font-size: 0.72rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+}
+
+@media (max-width: 767.98px) {
+    .galeria-detalle {
+        flex-direction: column-reverse;
+    }
+
+    .galeria-thumbs {
+        flex-direction: row;
+        width: 100%;
+        justify-content: center;
+        overflow-x: auto;
+    }
+
+    .galeria-thumb-btn {
+        width: 62px;
+        height: 62px;
+        flex-shrink: 0;
+    }
+}
+
+/* Círculos de colores */
+.color-dot {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(43, 46, 45, 0.24);
+    padding: 0;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.color-dot:hover {
+    transform: scale(1.1);
+}
+
+.color-dot.active {
+    box-shadow: 0 0 0 3px var(--bg-card), 0 0 0 5px var(--tinta);
+    transform: scale(1.05);
+}
+
+/* Bloques de galería/colores en dispositivo_form */
+.color-row-item {
+    background-color: var(--bg-hueso);
+    border: 1px solid var(--borde-suave);
+    border-radius: var(--radio-md);
+    padding: 0.9rem;
+}
+
+.color-picker-mac {
+    width: 44px;
+    height: 38px;
+    padding: 3px;
+    border-radius: 10px;
+    border: 1px solid var(--borde-suave);
+    background-color: var(--bg-card);
+    cursor: pointer;
 }

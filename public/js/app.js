@@ -62,8 +62,9 @@ function formatoPrecio(valor) {
     return '$' + Number(valor || 0).toLocaleString('es-AR', { maximumFractionDigits: 0 });
 }
 
-async function apiFetch(action, opciones = {}) {
-    const res = await fetch(`${API_URL}?action=${encodeURIComponent(action)}`, {
+async function apiFetch(action, opciones = {}, params = {}) {
+    const query = new URLSearchParams({ action, ...params });
+    const res = await fetch(`${API_URL}?${query.toString()}`, {
         credentials: 'same-origin',
         ...opciones,
     });
@@ -304,8 +305,6 @@ async function iniciarPaginaCatalogo() {
             grilla.innerHTML = `<div class="col-12"><div class="alert alert-danger">${escapeHtml(err.message)}</div></div>`;
         }
     }
-
-    // Solo aplica los filtros al apretar "Aplicar Filtros"
     form.addEventListener('submit', (e) => {
         e.preventDefault();
         const fd = new FormData(form);
@@ -324,7 +323,6 @@ async function iniciarPaginaCatalogo() {
         cargarCatalogo(1);
     });
 
-    // Eliminar dispositivo desde la grilla (admin)
     grilla.addEventListener('click', async (e) => {
         const btn = e.target.closest('[data-eliminar-id]');
         if (!btn) return;
@@ -390,15 +388,23 @@ async function iniciarPaginaDetalle() {
     const id = Number(params.get('id') || 1);
 
     try {
-        const data = await apiFetch(`detalle&id=${id}`);
+        const data = await apiFetch('detalle', {}, { id });
         const eq = data.item;
 
         document.title = `${eq.marca} ${eq.modelo} - RescaTix`;
-        const img = document.getElementById('detalleImagen');
-        if (img) {
-            img.src = eq.imagen_url;
-            img.alt = `Foto de ${eq.marca} ${eq.modelo}`;
-            aplicarFallbackImagenes(img.parentElement);
+
+        const imgPrincipal = document.getElementById('detalleImagen');
+        const thumbsCont   = document.getElementById('galeriaThumbs');
+        const btnPrev      = document.getElementById('galeriaPrev');
+        const btnNext      = document.getElementById('galeriaNext');
+        const contador     = document.getElementById('galeriaContador');
+
+        if (imgPrincipal) {
+            imgPrincipal.onerror = () => {
+                if (imgPrincipal.src !== FALLBACK_SVG) {
+                    imgPrincipal.src = FALLBACK_SVG;
+                }
+            };
         }
 
         const badgeDest = document.getElementById('detalleDestacado');
@@ -413,9 +419,127 @@ async function iniciarPaginaDetalle() {
         document.getElementById('detalleDescripcion').textContent = eq.detalle;
 
         const btnWa = document.getElementById('btnWhatsappComprar');
-        if (btnWa) {
-            const msg = `Hola RescaTix! Me interesa el ${eq.marca} ${eq.modelo} (${eq.almacenamiento}GB / ${eq.ram}GB RAM) publicado a ${formatoPrecio(eq.precio)}.`;
-            btnWa.href = `https://wa.me/5492926516982?text=${encodeURIComponent(msg)}`;
+        const actualizarLinkWhatsapp = (nombreColor = '') => {
+            if (!btnWa) return;
+            const textoColor = nombreColor ? ` en color ${nombreColor}` : '';
+            const msg = `Hola RescaTix! Me interesa el ${eq.marca} ${eq.modelo}${textoColor} (${eq.almacenamiento}GB / ${eq.ram}GB RAM) publicado a ${formatoPrecio(eq.precio)}.`;
+            btnWa.href = `https://wa.me/5492926525813?text=${encodeURIComponent(msg)}`;
+        };
+        actualizarLinkWhatsapp();
+
+        // Controlador de la galería (miniaturas apiladas + flechas + foto grande)
+        let galeriaActual = [];
+        let indiceFoto = 0;
+        let etiquetaAlt = `${eq.marca} ${eq.modelo}`;
+
+        function mostrarFoto(idx) {
+            if (!galeriaActual.length || !imgPrincipal) return;
+            indiceFoto = (idx + galeriaActual.length) % galeriaActual.length;
+
+            imgPrincipal.src = galeriaActual[indiceFoto];
+            imgPrincipal.alt = `Foto ${indiceFoto + 1} de ${etiquetaAlt}`;
+
+            if (contador) {
+                contador.textContent = `${indiceFoto + 1} / ${galeriaActual.length}`;
+            }
+
+            thumbsCont?.querySelectorAll('.galeria-thumb-btn').forEach((btn, i) => {
+                const activa = i === indiceFoto;
+                btn.classList.toggle('active', activa);
+                btn.setAttribute('aria-selected', activa ? 'true' : 'false');
+            });
+        }
+
+        function cargarGaleria(urls, nombreVariante = '') {
+            galeriaActual = (Array.isArray(urls) && urls.length > 0 ? urls : [eq.imagen_url]).slice(0, 5);
+            etiquetaAlt = nombreVariante
+                ? `${eq.marca} ${eq.modelo} color ${nombreVariante}`
+                : `${eq.marca} ${eq.modelo}`;
+
+            const tieneMultiples = galeriaActual.length > 1;
+            btnPrev?.classList.toggle('d-none', !tieneMultiples);
+            btnNext?.classList.toggle('d-none', !tieneMultiples);
+            contador?.classList.toggle('d-none', !tieneMultiples);
+
+            if (thumbsCont) {
+                thumbsCont.classList.toggle('d-none', !tieneMultiples);
+                thumbsCont.innerHTML = galeriaActual.map((url, i) => `
+                    <button
+                        type="button"
+                        class="galeria-thumb-btn"
+                        role="option"
+                        aria-selected="false"
+                        aria-label="Ver imagen ${i + 1}"
+                        data-thumb-idx="${i}"
+                    >
+                        <img src="${escapeHtml(url)}" alt="Miniatura ${i + 1}">
+                    </button>
+                `).join('');
+
+                thumbsCont.querySelectorAll('img').forEach((tImg) => {
+                    tImg.onerror = () => {
+                        if (tImg.src !== FALLBACK_SVG) tImg.src = FALLBACK_SVG;
+                    };
+                });
+            }
+
+            mostrarFoto(0);
+        }
+
+        thumbsCont?.addEventListener('click', (e) => {
+            const btn = e.target.closest('.galeria-thumb-btn');
+            if (!btn) return;
+            mostrarFoto(Number(btn.dataset.thumbIdx));
+        });
+        btnPrev?.addEventListener('click', () => mostrarFoto(indiceFoto - 1));
+        btnNext?.addEventListener('click', () => mostrarFoto(indiceFoto + 1));
+
+        // Colores: si tiene variantes, cada círculo carga su propia galería de 1-5 fotos
+        const bloqueColores   = document.getElementById('bloqueColores');
+        const selectorColores = document.getElementById('selectorColores');
+        const textoColor      = document.getElementById('colorSeleccionadoTexto');
+        const colores         = Array.isArray(eq.colores) ? eq.colores : [];
+
+        if (bloqueColores && selectorColores && colores.length > 0) {
+            bloqueColores.classList.remove('d-none');
+
+            const seleccionarColor = (indice) => {
+                const elegido = colores[indice];
+                if (!elegido) return;
+
+                if (textoColor) textoColor.textContent = elegido.nombre;
+                actualizarLinkWhatsapp(elegido.nombre);
+                cargarGaleria(elegido.imagenes_url, elegido.nombre);
+
+                selectorColores.querySelectorAll('.color-dot').forEach((btn, i) => {
+                    const activo = i === indice;
+                    btn.classList.toggle('active', activo);
+                    btn.setAttribute('aria-checked', activo ? 'true' : 'false');
+                });
+            };
+
+            selectorColores.innerHTML = colores.map((c, idx) => `
+                <button
+                    type="button"
+                    class="color-dot"
+                    style="background-color: ${escapeHtml(c.hex)};"
+                    title="${escapeHtml(c.nombre)}"
+                    aria-label="Color ${escapeHtml(c.nombre)}"
+                    role="radio"
+                    aria-checked="false"
+                    data-color-idx="${idx}"
+                ></button>
+            `).join('');
+
+            selectorColores.addEventListener('click', (e) => {
+                const btn = e.target.closest('.color-dot');
+                if (!btn) return;
+                seleccionarColor(Number(btn.dataset.colorIdx));
+            });
+
+            seleccionarColor(0);
+        } else {
+            cargarGaleria(eq.imagenes_url || [eq.imagen_url]);
         }
 
         const btnEditar = document.getElementById('btnEditarDetalle');
@@ -709,10 +833,91 @@ async function cargarCarruselAdmin(feedback) {
 /* ---------------- FORMULARIO ALTA / EDICIÓN DISPOSITIVO ---------------- */
 
 async function iniciarPaginaDispositivoForm() {
-    const form = document.getElementById('formDispositivo');
-    const feedback = document.getElementById('formDispositivoFeedback');
-    const titulo = document.getElementById('tituloFormDispositivo');
+    const form              = document.getElementById('formDispositivo');
+    const feedback          = document.getElementById('formDispositivoFeedback');
+    const titulo            = document.getElementById('tituloFormDispositivo');
+    const listaImgsPrinc    = document.getElementById('listaImagenesPrincipales');
+    const btnAgregarImgPr   = document.getElementById('btnAgregarImagenPrincipal');
+    const listaColores      = document.getElementById('listaColoresForm');
+    const btnAgregarColor   = document.getElementById('btnAgregarColor');
     if (!form) return;
+
+    const MAX_IMAGENES = 5;
+
+    function actualizarControlesImagenes(contenedor, btnAgregar) {
+        const filas = contenedor.querySelectorAll('.img-input-row');
+        filas.forEach((fila, idx) => {
+            const num = fila.querySelector('.img-num');
+            if (num) num.textContent = `#${idx + 1}`;
+            const btnQuitar = fila.querySelector('[data-quitar-img]');
+            if (btnQuitar) btnQuitar.disabled = filas.length <= 1;
+        });
+        if (btnAgregar) {
+            btnAgregar.disabled = filas.length >= MAX_IMAGENES;
+        }
+    }
+
+    function agregarFilaImagen(contenedor, btnAgregar, valor = '', placeholder = 'Ej: A15.avif') {
+        if (contenedor.querySelectorAll('.img-input-row').length >= MAX_IMAGENES) return;
+
+        const fila = document.createElement('div');
+        fila.className = 'img-input-row d-flex align-items-center gap-2';
+        fila.innerHTML = `
+            <span class="font-mono small text-muted-mac img-num" style="width: 24px;">#1</span>
+            <input type="text" class="form-control form-control-sm input-mac" data-campo="img-nombre" value="${escapeHtml(valor)}" placeholder="${escapeHtml(placeholder)}">
+            <button type="button" class="btn btn-mac-danger btn-xs" data-quitar-img>Quitar</button>
+        `;
+        fila.querySelector('[data-quitar-img]').addEventListener('click', () => {
+            if (contenedor.querySelectorAll('.img-input-row').length <= 1) return;
+            fila.remove();
+            actualizarControlesImagenes(contenedor, btnAgregar);
+        });
+        contenedor.appendChild(fila);
+        actualizarControlesImagenes(contenedor, btnAgregar);
+    }
+
+    function agregarBloqueColor(color = {}) {
+        if (!listaColores) return;
+        const bloque = document.createElement('div');
+        bloque.className = 'color-row-item';
+        bloque.innerHTML = `
+            <div class="row g-2 align-items-center mb-2">
+                <div class="col-auto">
+                    <input type="color" class="color-picker-mac" data-campo="hex" value="${escapeHtml(color.hex || '#2B2E2D')}" title="Elegir color">
+                </div>
+                <div class="col">
+                    <input type="text" class="form-control form-control-sm input-mac" data-campo="nombre" value="${escapeHtml(color.nombre || '')}" placeholder="Nombre del color (ej: Amarillo)">
+                </div>
+                <div class="col-auto d-flex gap-1">
+                    <button type="button" class="btn btn-mac-soft btn-xs" data-agregar-img-color>+ Foto</button>
+                    <button type="button" class="btn btn-mac-danger btn-xs" data-quitar-color>Quitar color</button>
+                </div>
+            </div>
+            <div class="d-flex flex-column gap-2 ps-1" data-imgs-color></div>
+        `;
+
+        const contImgsColor = bloque.querySelector('[data-imgs-color]');
+        const btnAddImgColor = bloque.querySelector('[data-agregar-img-color]');
+
+        btnAddImgColor.addEventListener('click', () => {
+            agregarFilaImagen(contImgsColor, btnAddImgColor, '', 'Ej: a15amarillo_2.avif');
+        });
+        bloque.querySelector('[data-quitar-color]').addEventListener('click', () => bloque.remove());
+
+        const imgsIniciales = Array.isArray(color.imagenes) && color.imagenes.length > 0
+            ? color.imagenes
+            : (color.imagen ? [color.imagen] : ['']);
+        imgsIniciales.slice(0, MAX_IMAGENES).forEach((img) => {
+            agregarFilaImagen(contImgsColor, btnAddImgColor, img, 'Ej: a15amarillo.avif');
+        });
+
+        listaColores.appendChild(bloque);
+    }
+
+    btnAgregarImgPr?.addEventListener('click', () => {
+        agregarFilaImagen(listaImgsPrinc, btnAgregarImgPr, '', 'Ej: A15_atras.avif');
+    });
+    btnAgregarColor?.addEventListener('click', () => agregarBloqueColor());
 
     const params = new URLSearchParams(window.location.search);
     const idEditar = Number(params.get('id') || 0);
@@ -720,7 +925,7 @@ async function iniciarPaginaDispositivoForm() {
     if (idEditar > 0) {
         if (titulo) titulo.textContent = 'Editar Dispositivo';
         try {
-            const data = await apiFetch(`detalle&id=${idEditar}`);
+            const data = await apiFetch('detalle', {}, { id: idEditar });
             const eq = data.item;
             document.getElementById('dispositivoId').value = eq.id;
             document.getElementById('marca').value = eq.marca;
@@ -729,12 +934,25 @@ async function iniciarPaginaDispositivoForm() {
             document.getElementById('ram').value = eq.ram;
             document.getElementById('precio').value = eq.precio;
             document.getElementById('condicion_bateria').value = eq.condicion_bateria;
-            document.getElementById('imagen').value = eq.imagen || '';
             document.getElementById('detalle').value = eq.detalle;
             document.getElementById('destacado').checked = Boolean(eq.destacado);
+
+            const imgsEquipo = Array.isArray(eq.imagenes) && eq.imagenes.length > 0
+                ? eq.imagenes
+                : [eq.imagen || ''];
+            imgsEquipo.slice(0, MAX_IMAGENES).forEach((img) => {
+                agregarFilaImagen(listaImgsPrinc, btnAgregarImgPr, img);
+            });
+
+            if (Array.isArray(eq.colores)) {
+                eq.colores.forEach((c) => agregarBloqueColor(c));
+            }
         } catch (err) {
             mostrarAlerta(feedback, 'danger', err.message);
+            agregarFilaImagen(listaImgsPrinc, btnAgregarImgPr, '');
         }
+    } else {
+        agregarFilaImagen(listaImgsPrinc, btnAgregarImgPr, '');
     }
 
     form.addEventListener('submit', async (e) => {
@@ -750,6 +968,37 @@ async function iniciarPaginaDispositivoForm() {
         });
         if (!todoValido) return;
 
+        const imagenes = [];
+        listaImgsPrinc?.querySelectorAll('[data-campo="img-nombre"]').forEach((inp) => {
+            const val = inp.value.trim();
+            if (val !== '' && imagenes.length < MAX_IMAGENES) {
+                imagenes.push(val);
+            }
+        });
+        if (imagenes.length === 0) {
+            imagenes.push('default.avif');
+        }
+
+        const colores = [];
+        listaColores?.querySelectorAll('.color-row-item').forEach((bloque) => {
+            const hex    = bloque.querySelector('[data-campo="hex"]')?.value || '#333333';
+            const nombre = bloque.querySelector('[data-campo="nombre"]')?.value.trim() || '';
+            const imgsC  = [];
+            bloque.querySelectorAll('[data-imgs-color] [data-campo="img-nombre"]').forEach((inp) => {
+                const val = inp.value.trim();
+                if (val !== '' && imgsC.length < MAX_IMAGENES) {
+                    imgsC.push(val);
+                }
+            });
+            if (nombre !== '' || imgsC.length > 0) {
+                colores.push({
+                    hex,
+                    nombre: nombre || 'Variante',
+                    imagenes: imgsC.length > 0 ? imgsC : ['default.avif'],
+                });
+            }
+        });
+
         const payload = {
             id: Number(document.getElementById('dispositivoId').value || 0),
             marca: document.getElementById('marca').value.trim(),
@@ -758,9 +1007,11 @@ async function iniciarPaginaDispositivoForm() {
             ram: Number(document.getElementById('ram').value),
             precio: Number(document.getElementById('precio').value),
             condicion_bateria: document.getElementById('condicion_bateria').value.trim(),
-            imagen: document.getElementById('imagen').value.trim(),
+            imagen: imagenes[0],
+            imagenes,
             detalle: document.getElementById('detalle').value.trim(),
             destacado: document.getElementById('destacado').checked,
+            colores,
         };
 
         try {

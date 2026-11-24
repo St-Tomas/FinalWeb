@@ -30,7 +30,7 @@
                             <a class="nav-link nav-mac-link solo-publico" href="cotizar.html">Cotizar</a>
                             <a class="nav-link nav-mac-link solo-admin d-inline-flex align-items-center gap-2" href="admin.html">
                                 <span>Cotizaciones</span>
-                                <span class="badge badge-rose rounded-pill" id="badgePendientes">2</span>
+                                <span class="badge badge-rose rounded-pill d-none" id="badgePendientes">0</span>
                             </a>
                         </li>
                     </ul>
@@ -61,52 +61,63 @@
         </div>
 
         <article class="card card-mac p-4 p-md-5" id="detalleEquipo">
-            <div class="row g-4 g-lg-5 align-items-center">
-                <div class="col-12 col-md-5">
-                    <div class="detalle-img-box">
-                        <span class="badge-destacado font-mono" id="detalleDestacado">★ DESTACADO</span>
-                        <img src="../public/images/A15.avif" alt="Foto del Samsung Galaxy A15 4G" id="detalleImagen" class="img-fluid">
+            <div class="row g-4 g-lg-5 align-items-start">
+                <div class="col-12 col-md-6">
+                    <div class="galeria-detalle">
+                        <div class="galeria-thumbs d-none" id="galeriaThumbs" role="listbox" aria-label="Miniaturas del equipo"></div>
+                        <div class="detalle-img-box flex-grow-1">
+                            <span class="badge-destacado font-mono d-none" id="detalleDestacado">★ DESTACADO</span>
+                            <button type="button" class="galeria-arrow galeria-arrow-prev d-none" id="galeriaPrev" aria-label="Imagen anterior">&#8592;</button>
+                            <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Imagen del dispositivo" id="detalleImagen" class="img-fluid">
+                            <button type="button" class="galeria-arrow galeria-arrow-next d-none" id="galeriaNext" aria-label="Imagen siguiente">&#8594;</button>
+                            <span class="galeria-contador font-mono d-none" id="galeriaContador">1 / 1</span>
+                        </div>
                     </div>
                 </div>
 
-                <div class="col-12 col-md-7">
-                    <span class="font-mono small text-muted-mac text-uppercase" id="detalleMarca">Samsung</span>
-                    <h1 class="h2 fw-bold mb-2" id="detalleModelo">Galaxy A15 4G</h1>
-                    <p class="precio-grande fw-bold mb-4" id="detallePrecio">$250.000</p>
+                <div class="col-12 col-md-6">
+                    <span class="font-mono small text-muted-mac text-uppercase" id="detalleMarca">...</span>
+                    <h1 class="h2 fw-bold mb-2" id="detalleModelo">Cargando equipo...</h1>
+                    <p class="precio-grande fw-bold mb-4" id="detallePrecio">---</p>
+
+                    <div id="bloqueColores" class="mb-4 d-none">
+                        <span class="tiny text-muted-mac d-block font-mono mb-2">
+                            COLOR: <strong class="text-dark" id="colorSeleccionadoTexto">-</strong>
+                        </span>
+                        <div id="selectorColores" class="d-flex flex-wrap gap-3" role="radiogroup" aria-label="Colores disponibles"></div>
+                    </div>
 
                     <div class="row g-2 mb-4">
                         <div class="col-6 col-sm-4">
                             <div class="spec-box">
                                 <span class="tiny text-muted-mac d-block font-mono">ALMACENAMIENTO</span>
-                                <strong id="detalleAlmacenamiento">128 GB</strong>
+                                <strong id="detalleAlmacenamiento">-</strong>
                             </div>
                         </div>
                         <div class="col-6 col-sm-4">
                             <div class="spec-box">
                                 <span class="tiny text-muted-mac d-block font-mono">MEMORIA RAM</span>
-                                <strong id="detalleRam">4 GB</strong>
+                                <strong id="detalleRam">-</strong>
                             </div>
                         </div>
                         <div class="col-12 col-sm-4">
                             <div class="spec-box spec-box-sage">
                                 <span class="tiny text-muted-mac d-block font-mono">BATERÍA</span>
-                                <strong id="detalleBateria">100% (Original)</strong>
+                                <strong id="detalleBateria">-</strong>
                             </div>
                         </div>
                     </div>
 
                     <div class="mb-4">
                         <h2 class="h6 font-mono text-uppercase text-muted-mac mb-2">Especificaciones y Estado Técnico</h2>
-                        <p class="mb-0 lh-base" id="detalleDescripcion">
-                            Módulo original de fábrica, sin rayones. Limpieza en puerto de carga realizada. Funciona perfecto.
-                        </p>
+                        <p class="mb-0 lh-base" id="detalleDescripcion">Cargando especificaciones...</p>
                     </div>
 
                     <div class="d-flex flex-wrap gap-2">
-                        <a href="https://wa.me/5492926516982" target="_blank" rel="noopener" id="btnWhatsappComprar" class="btn btn-mac-dark px-4 py-2">
+                        <a href="https://wa.me/5492926525813" target="_blank" rel="noopener" id="btnWhatsappComprar" class="btn btn-mac-dark px-4 py-2">
                             Contactar para comprar
                         </a>
-                        <a href="dispositivo_form.html?id=1" id="btnEditarDetalle" class="btn btn-mac-sage px-4 py-2 solo-admin">Editar equipo</a>
+                        <a href="#" id="btnEditarDetalle" class="btn btn-mac-sage px-4 py-2 solo-admin">Editar equipo</a>
                         <button type="button" id="btnEliminarDetalle" class="btn btn-mac-danger px-4 py-2 solo-admin">Eliminar</button>
                     </div>
                 </div>
@@ -126,7 +137,7 @@
                 </div>
                 <div class="col-md-6 text-md-end small">
                     <p class="mb-1">Email: <a href="mailto:RescaTix@gmail.com" class="link-mac">RescaTix@gmail.com</a></p>
-                    <p class="mb-1">Teléfono: <a href="https://wa.me/5492926516982" target="_blank" rel="noopener" class="link-mac">+54 9 2926-516982</a></p>
+                    <p class="mb-1">Teléfono: <a href="https://wa.me/5492926525813" target="_blank" rel="noopener" class="link-mac">+54 9 2926-525813</a></p>
                     <p class="text-muted-mac mb-0">&copy; 2026 RescaTix Móviles. Todos los derechos reservados.</p>
                 </div>
             </div>
@@ -135,5 +146,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../public/js/app.js" defer></script>
+    <script src="https://sisciencia.chubut.gov.ar/static/js/accesibilidad-lti.min.js" charset="utf-8" defer></script>
 </body>
 </html>

@@ -33,7 +33,6 @@ $dispositivoCtrl = new DispositivoController();
 $cotizacionCtrl  = new CotizacionController();
 
 switch ($action) {
-    // Autenticación y sesiones
     case 'session':
         $authCtrl->estadoSesion();
         break;
@@ -44,7 +43,6 @@ switch ($action) {
         $authCtrl->logout();
         break;
 
-    // Dispositivos (público + admin)
     case 'destacados':
         $dispositivoCtrl->destacados();
         break;
@@ -67,7 +65,6 @@ switch ($action) {
         $dispositivoCtrl->guardarCarrusel();
         break;
 
-    // Cotizaciones (público + admin)
     case 'cotizacion_crear':
         $cotizacionCtrl->crear();
         break;

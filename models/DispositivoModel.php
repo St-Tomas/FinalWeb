@@ -15,6 +15,8 @@ class DispositivoModel {
                 'detalle' => 'Módulo original de fábrica, sin rayones. Limpieza en puerto de carga realizada. Funciona perfecto.',
                 'precio' => 250000,
                 'imagen' => 'A15.avif',
+                'imagenes' => ['A15.avif'],
+                'colores' => [],
                 'destacado' => true,
                 'orden_carrusel' => 1,
             ],
@@ -27,7 +29,9 @@ class DispositivoModel {
                 'condicion_bateria' => '92% (Excelente)',
                 'detalle' => 'Pin de carga nuevo recién instalado. Pantalla pOLED impecable y sensores verificados.',
                 'precio' => 180000,
-                'imagen' => 'default.png',
+                'imagen' => 'default.avif',
+                'imagenes' => ['default.avif'],
+                'colores' => [],
                 'destacado' => true,
                 'orden_carrusel' => 2,
             ],
@@ -40,7 +44,9 @@ class DispositivoModel {
                 'condicion_bateria' => '85% (Original)',
                 'detalle' => 'Touch ID y True Tone operativos. Mínimas marcas de uso en marco, vidrio templado colocado.',
                 'precio' => 200000,
-                'imagen' => 'default.png',
+                'imagen' => 'default.avif',
+                'imagenes' => ['default.avif'],
+                'colores' => [],
                 'destacado' => true,
                 'orden_carrusel' => 3,
             ],
@@ -53,7 +59,9 @@ class DispositivoModel {
                 'condicion_bateria' => '82% (Buena)',
                 'detalle' => 'Pantalla OLED sin manchas ni líneas. Ideal como equipo secundario o uso diario liviano.',
                 'precio' => 90000,
-                'imagen' => 'default.png',
+                'imagen' => 'default.avif',
+                'imagenes' => ['default.avif'],
+                'colores' => [],
                 'destacado' => true,
                 'orden_carrusel' => 4,
             ],
@@ -66,7 +74,9 @@ class DispositivoModel {
                 'condicion_bateria' => '95% (Original)',
                 'detalle' => 'Estado impecable, pantalla 144Hz. Incluye limpieza interna preventiva y prueba completa.',
                 'precio' => 320000,
-                'imagen' => 'default.png',
+                'imagen' => 'default.avif',
+                'imagenes' => ['default.avif'],
+                'colores' => [],
                 'destacado' => true,
                 'orden_carrusel' => 5,
             ],
@@ -79,7 +89,9 @@ class DispositivoModel {
                 'condicion_bateria' => '79% (Original)',
                 'detalle' => 'Face ID andando al 100%, cámaras limpias y sin abrir. Listo para usar con cualquier empresa.',
                 'precio' => 380000,
-                'imagen' => 'default.png',
+                'imagen' => 'default.avif',
+                'imagenes' => ['default.avif'],
+                'colores' => [],
                 'destacado' => true,
                 'orden_carrusel' => 6,
             ],
@@ -120,17 +132,88 @@ class DispositivoModel {
         if ($limpio !== '' && file_exists($dirImg . $limpio)) {
             return '../public/images/' . rawurlencode($limpio);
         }
-        if (file_exists($dirImg . 'default.png')) {
-            return '../public/images/default.png';
-        }
         if (file_exists($dirImg . 'default.avif')) {
             return '../public/images/default.avif';
         }
-        return '../public/images/default.png';
+        if (file_exists($dirImg . 'default.png')) {
+            return '../public/images/default.png';
+        }
+        return '../public/images/default.avif';
+    }
+
+    private static function sanitizarImagenes($rawImagenes, string $fallback = 'default.avif'): array {
+        $lista = [];
+        if (is_array($rawImagenes)) {
+            foreach ($rawImagenes as $img) {
+                $limpio = basename(trim((string)$img));
+                if ($limpio !== '') {
+                    $lista[] = $limpio;
+                }
+                if (count($lista) >= 5) {
+                    break;
+                }
+            }
+        } elseif (is_string($rawImagenes)) {
+            $limpio = basename(trim($rawImagenes));
+            if ($limpio !== '') {
+                $lista[] = $limpio;
+            }
+        }
+
+        if (empty($lista)) {
+            $fb = basename(trim($fallback));
+            $lista[] = $fb !== '' ? $fb : 'default.avif';
+        }
+        return $lista;
+    }
+
+    private static function sanitizarColores($rawColores): array {
+        if (!is_array($rawColores)) {
+            return [];
+        }
+        $resultado = [];
+        foreach ($rawColores as $c) {
+            if (!is_array($c)) {
+                continue;
+            }
+            $nombre = trim((string)($c['nombre'] ?? ''));
+            $hex    = trim((string)($c['hex'] ?? '#333333'));
+            if (!preg_match('/^#[0-9a-fA-F]{6}$/', $hex)) {
+                $hex = '#333333';
+            }
+
+            // Acepta el nuevo formato (array 'imagenes') y el viejo ('imagen')
+            $rawImgs = $c['imagenes'] ?? (isset($c['imagen']) ? [$c['imagen']] : []);
+            $imagenes = self::sanitizarImagenes($rawImgs, 'default.avif');
+
+            if ($nombre === '' && $imagenes === ['default.avif']) {
+                continue;
+            }
+
+            $resultado[] = [
+                'nombre'   => $nombre !== '' ? $nombre : 'Variante',
+                'hex'      => $hex,
+                'imagenes' => $imagenes,
+            ];
+        }
+        return $resultado;
     }
 
     private static function enriquecer(array $d): array {
-        $d['imagen_url'] = self::resolverImagenUrl($d['imagen'] ?? '');
+        $imgs = self::sanitizarImagenes($d['imagenes'] ?? ($d['imagen'] ?? 'default.avif'));
+        $d['imagenes']     = $imgs;
+        $d['imagen']       = $imgs[0];
+        $d['imagen_url']   = self::resolverImagenUrl($imgs[0]);
+        $d['imagenes_url'] = array_map([self::class, 'resolverImagenUrl'], $imgs);
+
+        $colores = is_array($d['colores'] ?? null) ? $d['colores'] : [];
+        $d['colores'] = array_map(function ($c) {
+            $cImgs = self::sanitizarImagenes($c['imagenes'] ?? ($c['imagen'] ?? 'default.avif'));
+            $c['imagenes']     = $cImgs;
+            $c['imagenes_url'] = array_map([self::class, 'resolverImagenUrl'], $cImgs);
+            return $c;
+        }, $colores);
+
         return $d;
     }
 
@@ -221,10 +304,12 @@ class DispositivoModel {
     public static function guardar(array $datos): array {
         $todos = self::cargarTodosRaw();
         $id = (int)($datos['id'] ?? 0);
-        $imagenLimpia = basename(trim((string)($datos['imagen'] ?? '')));
-        if ($imagenLimpia === '') {
-            $imagenLimpia = 'default.png';
-        }
+
+        $imagenesLimpias = self::sanitizarImagenes(
+            $datos['imagenes'] ?? ($datos['imagen'] ?? 'default.avif'),
+            'default.avif'
+        );
+        $coloresLimpios = self::sanitizarColores($datos['colores'] ?? []);
 
         if ($id > 0) {
             foreach ($todos as &$d) {
@@ -236,7 +321,9 @@ class DispositivoModel {
                     $d['condicion_bateria'] = trim($datos['condicion_bateria']);
                     $d['detalle']           = trim($datos['detalle']);
                     $d['precio']            = (float)$datos['precio'];
-                    $d['imagen']            = $imagenLimpia;
+                    $d['imagen']            = $imagenesLimpias[0];
+                    $d['imagenes']          = $imagenesLimpias;
+                    $d['colores']           = $coloresLimpios;
                     $d['destacado']         = !empty($datos['destacado']);
                     if ($d['destacado'] && empty($d['orden_carrusel'])) {
                         $d['orden_carrusel'] = 99;
@@ -262,7 +349,9 @@ class DispositivoModel {
             'condicion_bateria' => trim($datos['condicion_bateria']),
             'detalle'           => trim($datos['detalle']),
             'precio'            => (float)$datos['precio'],
-            'imagen'            => $imagenLimpia,
+            'imagen'            => $imagenesLimpias[0],
+            'imagenes'          => $imagenesLimpias,
+            'colores'           => $coloresLimpios,
             'destacado'         => !empty($datos['destacado']),
             'orden_carrusel'    => !empty($datos['destacado']) ? ($maxId + 1) : 0,
         ];
