@@ -1,5 +1,5 @@
 :root {
-    --bg-hueso: #F5EFE6;
+    --bg-hueso: #f5e6ef;
     --bg-card: #FCF9F4;
     --bg-arena: #EBE2D3;
     --borde-suave: #DDD2C0;
@@ -21,7 +21,6 @@
     --sombra-hover: 0 14px 30px rgba(43, 46, 45, 0.10);
 }
 
-/* Base */
 body.bg-mac {
     background-color: var(--bg-hueso);
     background-image: radial-gradient(rgba(43, 46, 45, 0.07) 1px, transparent 1px);
@@ -53,7 +52,6 @@ main {
     border-color: var(--borde-suave) !important;
 }
 
-/* Visibilidad modo admin */
 body:not(.modo-admin) .solo-admin {
     display: none !important;
 }
@@ -62,7 +60,6 @@ body.modo-admin .solo-publico {
     display: none !important;
 }
 
-/* Navbar responsive */
 .navega-bar {
     background-color: var(--sage);
     border-bottom: 1px solid rgba(43, 46, 45, 0.12);
@@ -119,7 +116,6 @@ body.modo-admin .solo-publico {
     background-color: rgba(252, 249, 244, 0.55);
 }
 
-/* Cinta contextual de admin */
 .admin-ribbon {
     background-color: var(--bg-arena);
     border-bottom: 1px solid var(--borde-suave);
@@ -135,7 +131,7 @@ body.modo-admin .solo-publico {
     border: 1px solid rgba(43, 46, 45, 0.12);
 }
 
-/* Hero inicio */
+
 .hero-macintosh {
     padding: 3rem 0 2rem;
 }
@@ -194,7 +190,6 @@ body.modo-admin .solo-publico {
     max-width: 540px;
 }
 
-/* Carrusel lateral en inicio (sin scrollbar visible) */
 .carrusel-track {
     display: flex;
     gap: 1.25rem;
@@ -235,7 +230,7 @@ body.modo-admin .solo-publico {
     color: var(--tinta);
 }
 
-/* Cards y paneles */
+
 .panel-filtros,
 .panel-soft {
     background-color: var(--bg-arena);
@@ -293,7 +288,7 @@ body.modo-admin .solo-publico {
     object-fit: contain;
 }
 
-/* Badges y chips */
+
 .badge-destacado {
     position: absolute;
     top: 12px;
@@ -369,7 +364,7 @@ body.modo-admin .solo-publico {
     color: var(--tinta);
 }
 
-/* Inputs y selects */
+
 .form-control-retro,
 .input-mac {
     background-color: var(--bg-card);
@@ -391,7 +386,8 @@ body.modo-admin .solo-publico {
     border-color: var(--sage);
 }
 
-/* Botones */
+/*los botones */
+
 .btn-retro,
 .btn-mac-dark {
     background-color: var(--tinta);
@@ -500,7 +496,7 @@ body.modo-admin .solo-publico {
     color: var(--bg-card);
 }
 
-/* Tabla admin */
+
 .table-mac {
     --bs-table-bg: transparent;
     --bs-table-border-color: var(--borde-suave);
@@ -521,7 +517,7 @@ body.modo-admin .solo-publico {
     padding: 0.95rem 1rem;
 }
 
-/* Paginación */
+
 .pagination-retro .page-link {
     background-color: var(--bg-card);
     color: var(--tinta);
@@ -547,7 +543,7 @@ body.modo-admin .solo-publico {
     color: #A6A198;
 }
 
-/* Footer y links */
+
 .footer-mac {
     background-color: var(--bg-arena);
     border-top: 1px solid var(--borde-suave);
@@ -565,7 +561,7 @@ body.modo-admin .solo-publico {
     color: var(--rose-hover);
 }
 
-/* Galería de detalle: miniaturas apiladas + imagen grande */
+
 .galeria-detalle {
     display: flex;
     gap: 0.85rem;
@@ -667,7 +663,7 @@ body.modo-admin .solo-publico {
     }
 }
 
-/* Círculos de colores */
+
 .color-dot {
     width: 32px;
     height: 32px;
@@ -687,7 +683,7 @@ body.modo-admin .solo-publico {
     transform: scale(1.05);
 }
 
-/* Bloques de galería/colores en dispositivo_form */
+
 .color-row-item {
     background-color: var(--bg-hueso);
     border: 1px solid var(--borde-suave);

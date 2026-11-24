@@ -182,7 +182,6 @@ class DispositivoModel {
                 $hex = '#333333';
             }
 
-            // Acepta el nuevo formato (array 'imagenes') y el viejo ('imagen')
             $rawImgs = $c['imagenes'] ?? (isset($c['imagen']) ? [$c['imagen']] : []);
             $imagenes = self::sanitizarImagenes($rawImgs, 'default.avif');
 
