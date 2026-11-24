@@ -198,7 +198,7 @@ body.bg-mac {
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
     padding: 0.5rem 0.25rem 1.25rem;
-    scrollbar-width: thin;
+    scrollbar-width: none;
     scrollbar-color: var(--borde-suave) transparent;
 }
 

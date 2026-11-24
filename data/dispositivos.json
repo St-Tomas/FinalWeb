@@ -1,0 +1,80 @@
+[
+    {
+        "id": 1,
+        "marca": "Samsung",
+        "modelo": "Galaxy A15 4G",
+        "almacenamiento": 128,
+        "ram": 4,
+        "condicion_bateria": "100% (Original)",
+        "detalle": "Módulo original de fábrica, sin rayones. Limpieza en puerto de carga realizada. Funciona perfecto.",
+        "precio": 250000,
+        "imagen": "A15.avif",
+        "destacado": true,
+        "orden_carrusel": 1
+    },
+    {
+        "id": 2,
+        "marca": "Motorola",
+        "modelo": "Moto G52",
+        "almacenamiento": 128,
+        "ram": 6,
+        "condicion_bateria": "92% (Excelente)",
+        "detalle": "Pin de carga nuevo recién instalado. Pantalla pOLED impecable y sensores verificados.",
+        "precio": 180000,
+        "imagen": "default.png",
+        "destacado": true,
+        "orden_carrusel": 2
+    },
+    {
+        "id": 3,
+        "marca": "Apple",
+        "modelo": "iPhone SE 2020",
+        "almacenamiento": 64,
+        "ram": 3,
+        "condicion_bateria": "85% (Original)",
+        "detalle": "Touch ID y True Tone operativos. Mínimas marcas de uso en marco, vidrio templado colocado.",
+        "precio": 200000,
+        "imagen": "default.png",
+        "destacado": true,
+        "orden_carrusel": 3
+    },
+    {
+        "id": 4,
+        "marca": "Samsung",
+        "modelo": "Galaxy S8",
+        "almacenamiento": 64,
+        "ram": 4,
+        "condicion_bateria": "82% (Buena)",
+        "detalle": "Pantalla OLED sin manchas ni líneas. Ideal como equipo secundario o uso diario liviano.",
+        "precio": 90000,
+        "imagen": "default.png",
+        "destacado": true,
+        "orden_carrusel": 4
+    },
+    {
+        "id": 5,
+        "marca": "Motorola",
+        "modelo": "Edge 30",
+        "almacenamiento": 256,
+        "ram": 8,
+        "condicion_bateria": "95% (Original)",
+        "detalle": "Estado impecable, pantalla 144Hz. Incluye limpieza interna preventiva y prueba completa.",
+        "precio": 320000,
+        "imagen": "default.png",
+        "destacado": true,
+        "orden_carrusel": 5
+    },
+    {
+        "id": 6,
+        "marca": "Apple",
+        "modelo": "iPhone 11",
+        "almacenamiento": 128,
+        "ram": 4,
+        "condicion_bateria": "79% (Original)",
+        "detalle": "Face ID andando al 100%, cámaras limpias y sin abrir. Listo para usar con cualquier empresa.",
+        "precio": 380000,
+        "imagen": "default.png",
+        "destacado": true,
+        "orden_carrusel": 6
+    }
+]

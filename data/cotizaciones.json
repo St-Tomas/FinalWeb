@@ -1,0 +1,32 @@
+[
+    {
+        "id": 1,
+        "fecha": "03\/11\/2026 14:20",
+        "telefono_contacto": "2926-510011",
+        "marca": "Samsung",
+        "modelo_equipo": "Galaxy A15",
+        "estado_equipo": "Pantalla o vidrio roto (enciende)",
+        "detalles": "Módulo original astillado, táctil funciona.",
+        "estado_gestion": "leida"
+    },
+    {
+        "id": 2,
+        "fecha": "02\/11\/2026 18:45",
+        "telefono_contacto": "2926-520022",
+        "marca": "Motorola",
+        "modelo_equipo": "Moto G52",
+        "estado_equipo": "No enciende \/ Para repuestos",
+        "detalles": "Cayó al agua. No carga.",
+        "estado_gestion": "contactada"
+    },
+    {
+        "id": 3,
+        "fecha": "24\/11\/2026 10:22",
+        "telefono_contacto": "2926516982",
+        "marca": "Xiaomi",
+        "modelo_equipo": "Xiaomi Redmi 13C 5G",
+        "estado_equipo": "Pantalla o vidrio roto (enciende)",
+        "detalles": "No tiene Modulo y esta bloqueado por FRP",
+        "estado_gestion": "pendiente"
+    }
+]
